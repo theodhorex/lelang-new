@@ -124,7 +124,7 @@
 
             <div class="row d-flex">
                 <div class="col-md-4 mx-auto">
-                    <button type="submit" class="btn btn-primary d-block mx-auto mb-4" style="width: 100%;">Register</button>
+                    <button type="submit" class="btn btn-primary fw-semibold d-block mx-auto mb-4" style="width: 100%;">Register</button>
                     <p class="text-center mb-2">Already have account?</p>
                     <a href="/login" class="btn mx-auto d-block fw-semibold" style="background-color: rgb(190, 190, 190);">Login to existing account</a>
                 </div>

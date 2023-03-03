@@ -65,7 +65,7 @@
                         onClick="getPostinganDetails({{ $postingan->id }})">
                         <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="{{ $postingan->gambar }}"
                             alt="">
-                        <h5 class=" fw-semibold mb-1">{{ $postingan->title }}</h5>
+                        <h5 class=" fw-semibold mb-1">{{ Str::limit($postingan->title, 15) }}</h5>
                         <h6 class=" mb-4">{{ $postingan->subtitle }}</h6>
                         <h6 class=" mb-3">{{ $postingan->endauc }}</h6>
                         <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
@@ -113,7 +113,7 @@
                         onClick="getPostinganDetails({{ $list_item->id }})">
                         <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="{{ $list_item->gambar }}"
                             alt="">
-                        <h5 class=" fw-semibold mb-1">{{ $list_item->title }}</h5>
+                        <h5 class=" fw-semibold mb-1">{{ Str::limit($list_item->title, 15) }}</h5>
                         <h6 class=" mb-4">{{ $list_item->subtitle }}</h6>
                         <h6 class=" mb-3">{{ $list_item->endauc }}</h6>
                         <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
@@ -134,14 +134,12 @@
                 <div class="modal-header px-5" style="border-bottom: 1px solid #E6E6E6;">
                     <nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb my-auto">
-                            <li class="breadcrumb-item"><a class="text-decoration-none"
-                                    href="/home">Home</a>
+                            <li class="breadcrumb-item"><a class="text-decoration-none" href="/home">Home</a>
                             </li>
                             <li id="active-breadcrumb" class="breadcrumb-item active" aria-current="page">Library</li>
                         </ol>
                     </nav>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="imported-page" style="overflow-y: auto; overflow-x: hidden;"></div>
@@ -178,68 +176,7 @@
         </div>
     </div>
 
-    {{-- Footer --}}
-    <div class="row p-5">
-        <div class="col-6" style="border-right: 0.1px solid #cccccc;">
-            <div class="d-inline-flex">
-                <img style="width: 4.5vw;" src="{{ asset('asset/Main Logo.png') }}" alt="">
-                <h3 class="my-auto mx-2">Celtic Auction</h3>
-            </div>
-            <p class="text-secondary mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum aperiam
-                consequatur
-                Illum sunt perferendis voluptate omnis tempore!</p>
-            <p class="mb-5" style="color: #7E7E7E">© 2022, Celtic Auction. Powered by BOT.</p>
-
-            <div class="d-inline-flex">
-                <a href="#" class="text-light me-2 rounded-circle"
-                    style="padding: 0.1vw 0.95vh; background-color: #3B579D;"><i class="fa fa-facebook"></i></a>
-                <a href="#" class="text-light me-2 rounded-circle"
-                    style="padding: 0.1vw 0.95vh; background-color: #FF0E4C;"><i class="fa fa-instagram"></i></a>
-                <a href="#" class="text-light me-2 rounded-circle"
-                    style="padding: 0.1vw 0.95vh; background-color: #FF0000;"><i class="fa fa-youtube"></i></a>
-                <a href="#" class="text-light me-2 rounded-circle"
-                    style="padding: 0.1vw 0.95vh; background-color: #1D9BF0;"><i class="fa fa-twitter"></i></a>
-            </div>
-        </div>
-        <div class="col-6" style="border-left: 0.1px solid #cccccc;">
-            <div class="row">
-                <div class="col-6 px-4 pt-2">
-                    <h3>This market</h3>
-                    <ul class="list-group list-group-flush border-none">
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            About Brand Name</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Factories</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Careers</li>
-                    </ul>
-                </div>
-                <div class="col-6 px-4 pt-2">
-                    <h3>Page</h3>
-                    <ul class="list-group list-group-flush border-none">
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Home</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Account</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Form</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            List item</li>
-                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                            style="color: #7E7E7E; cursor: pointer;">
-                            Stat</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
     <script>
@@ -255,6 +192,37 @@
                 $("#imported-bid-data-details").html(data);
                 $("#exampleModalToggle2").show();
             });
+        }
+
+        function editpostingansDetails() {
+            let title = $("#postingan-title").val();
+            let subtitle = $("#postingan-subtitle").val();
+            let start_price = $("#postingan-start_price").val();
+            let endauc = $("#postingan-endauc").val();
+            let descandcond = $("#postingan-descandcond").val();
+            let location = $("#postingan-location").val();
+            $('#active-breadcrumb').html(`${title}`);
+            $('#title').replaceWith(
+                `<input id="title" name="title" type="text" value="${title}" class="form-control mb-2 cursor">`
+            );
+            $('#subtitle').replaceWith(
+                `<input id="subtitle" name="subtitle" type="text" value="${subtitle}" class="form-control mb-2 cursor">`
+            );
+            $('#start_price').replaceWith(
+                `<input id="start_price" name="start_price" type="text" value="${start_price}" class="form-control mb-2 cursor">`
+            );
+            $('#endauc').replaceWith(
+                `<input id="endauc" name="endauc" type="date" value="${endauc}" class="form-control mb-2 cursor">`
+            );
+            $('#location').replaceWith(
+                `<input id="location" name="location" type="text" value="${location}" class="form-control mb-2 cursor">`
+            );
+            $('#descandcond').replaceWith(
+                `<textarea id="descandcond" cols="30" rows="10" name="descandcond" class="form-control mb-2 cursor">${descandcond}</textarea>`
+            );
+            $('#modal-footer').append(
+                `<button type="submit" class="btn btn-primary fw-semibold" onClick="event.preventDefault(); document.getElementById('update-postingan-form').submit();">Save</button>`
+            );
         }
 
         function getWinnerName() {

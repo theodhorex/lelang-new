@@ -127,7 +127,7 @@
                         onClick="document.getElementById('login-form').submit()" role="button">
                         {{ __('Login') }}
                     </a> --}}
-                    <button type="submit" class="btn btn-primary d-block mx-auto mb-2" style="width: 100%;">Login</button>
+                    <button type="submit" class="btn btn-primary fw-semibold d-block mx-auto mb-2" style="width: 100%;">Login</button>
                     <span class="text-secondary text-center mx-auto d-block mb-3">Forgot your password?</span>
                     <p class="text-center mb-2">Don't have any account?</p>
                     <a href="/register" class="btn mx-auto d-block fw-semibold" style="background-color: rgb(190, 190, 190);">Create new account</a>

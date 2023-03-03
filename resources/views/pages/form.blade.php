@@ -36,8 +36,8 @@
 
 <div class="row">
     <div class="col rounded p-3 px-4 shadow">
-        <h4 class="text-secondary fw-semibold">Item Information</h4>
-        <span style="color: #AEAEAE">Fill out a few details to start posting your item.</span>
+        <h4 class="text-dark fw-semibold">Item Information</h4>
+        <span class="text-secondary">Fill out a few details to start posting your item.</span>
         <form action="{{ url('/form-send') }}" id="post-form" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="item-photo mt-4">

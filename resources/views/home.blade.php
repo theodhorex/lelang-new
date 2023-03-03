@@ -13,10 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <link rel="apple-touch-icon" sizes="76x76"
-        href="{{ asset('asset/Main Icon.png') }}">
-    <link rel="icon" type="image/png"
-        href="{{ asset('asset/Main Icon.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('asset/Main Icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('asset/Main Icon.png') }}">
 
     <style>
         * {
@@ -62,7 +60,7 @@
             color: #C6DE41;
         }
     </style>
-    <title>Celtic Auction   </title>
+    <title>Celtic Auction </title>
 </head>
 
 <body>
@@ -203,8 +201,8 @@
                                     v-pre>{{ Auth::user()->name }}</a>
                                 <a href="#"
                                     class="text-decoration-none non-active-color fw-semibold remove-hover my-auto"
-                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    v-pre><i class="fa fa-caret-down"></i></a>
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" v-pre><i class="fa fa-caret-down"></i></a>
                                 <div class="col">
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ url('/profile') }}">
@@ -230,73 +228,73 @@
             <div class="col-10 p-3 px-5" style="margin-left: 16.3vw; overflow-y: auto; height: 100vh;">
                 @yield('content')
 
-                <!-- <h5 class="pt-4 text-center" style="color: #949494;">© 2022, Brand Name. Powered by GOD.</h5> -->
-                <!-- Footer -->
-                <!-- <div class="row p-5 px-0 mt-5">
-                    <div class="col-6" style="border-right: 0.1px solid #5C5C5C;">
+                {{-- Footer --}}
+                <div class="row p-5 px-2">
+                    <div class="col-6" style="border-right: 0.1px solid #cccccc;">
                         <div class="d-inline-flex">
                             <img style="width: 4.5vw;" src="{{ asset('asset/Main Logo.png') }}" alt="">
-                            <h3 class="main-color my-auto mx-2">Brand Name</h3>
+                            <h3 class="my-auto mx-2">Celtic Auction</h3>
                         </div>
-                        <p class="text-light mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum aperiam
+                        <p class="text-secondary mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
+                            aperiam
                             consequatur
                             Illum sunt perferendis voluptate omnis tempore!</p>
-                        <p class="mb-5" style="color: #7E7E7E">© 2022, Brand Name. Powered by GOD.</p>
+                        <p class="mb-5" style="color: #7E7E7E">© 2022, Celtic Auction. Powered by BOT.</p>
 
                         <div class="d-inline-flex">
                             <a href="#" class="text-light me-2 rounded-circle"
-                                style="padding: 0.1vw 0.95vh; background-color: #19343A;"><i
+                                style="padding: 0.1vw 0.95vh; background-color: #3B579D;"><i
                                     class="fa fa-facebook"></i></a>
                             <a href="#" class="text-light me-2 rounded-circle"
-                                style="padding: 0.1vw 0.95vh; background-color: #19343A;"><i
+                                style="padding: 0.1vw 0.95vh; background-color: #FF0E4C;"><i
                                     class="fa fa-instagram"></i></a>
                             <a href="#" class="text-light me-2 rounded-circle"
-                                style="padding: 0.1vw 0.95vh; background-color: #19343A;"><i
+                                style="padding: 0.1vw 0.95vh; background-color: #FF0000;"><i
                                     class="fa fa-youtube"></i></a>
                             <a href="#" class="text-light me-2 rounded-circle"
-                                style="padding: 0.1vw 0.95vh; background-color: #19343A;"><i
+                                style="padding: 0.1vw 0.95vh; background-color: #1D9BF0;"><i
                                     class="fa fa-twitter"></i></a>
                         </div>
                     </div>
-                    <div class="col-6" style="border-left: 0.1px solid #5C5C5C;">
+                    <div class="col-6" style="border-left: 0.1px solid #cccccc;">
                         <div class="row">
                             <div class="col-6 px-4 pt-2">
-                                <h3 class="text-light">This market</h3>
+                                <h3>This market</h3>
                                 <ul class="list-group list-group-flush border-none">
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
+                                        style="color: #7E7E7E; cursor: pointer;">
                                         About Brand Name</li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
+                                        style="color: #7E7E7E; cursor: pointer;">
                                         Factories</li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
+                                        style="color: #7E7E7E; cursor: pointer;">
                                         Careers</li>
                                 </ul>
                             </div>
                             <div class="col-6 px-4 pt-2">
-                                <h3 class="text-light">Page</h3>
+                                <h3>Page</h3>
                                 <ul class="list-group list-group-flush border-none">
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
-                                        Home</li>
+                                        style="color: #7E7E7E; cursor: pointer;">
+                                        <a class="text-decoration-none text-secondary" href="{{ url('/home') }}">Home</a></li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
-                                        Account</li>
+                                        style="color: #7E7E7E; cursor: pointer;">
+                                        <a class="text-decoration-none text-secondary" href="{{ url('/account-pages') }}">Account</a></li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
-                                        Form</li>
+                                        style="color: #7E7E7E; cursor: pointer;">
+                                        <a class="text-decoration-none text-secondary" href="{{ url('/form') }}">Form</a></li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
-                                        List item</li>
+                                        style="color: #7E7E7E; cursor: pointer;">
+                                        <a href="{{ url('/list-item') }}" class="text-decoration-none text-secondary">List Item</a></li>
                                     <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E;">
-                                        Stat</li>
+                                        style="color: #7E7E7E; cursor: pointer;">
+                                        <a href="{{ url('/stat') }}" class="text-decoration-none text-secondary">Stat</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
         <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
