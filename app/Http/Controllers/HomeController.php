@@ -36,7 +36,8 @@ class HomeController extends Controller
         $list_item = Postingan::latest()->limit(6)->get();
         $account = User::all();
         $user_reply = UserReply::all();
-        return view('pages/home', compact(['account', 'postingan', 'user_reply', 'list_item']));
+        $your_order = BidData::where('user_id', Auth::user()->id)->first();
+        return view('pages/home', compact(['account', 'postingan', 'user_reply', 'list_item', 'your_order']));
     }
 
     public function perform()

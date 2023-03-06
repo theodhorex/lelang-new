@@ -62,20 +62,27 @@
                     <h5 class="fw-semibold mx-2 my-auto">{{ $postingans->category }}</h5>
                     <h5 class="fw-semibold mx-2 my-auto @if (Auth::user()->role != 'user') d-none @endif"><i
                             class="fa fa-exclamation-circle"></i></h5>
-                    <a href="#" onClick="editpostingansDetails()"
-                        class="text-dark my-auto mx-1 text-decoration-none @if (Auth::user()->role == 'user') d-none @endif"
-                        style="font-size: .95vw;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="{{ url('/delete-postingan', $postingans->id) }}"
-                        onclick="return confirm('Are you sure, to delete {{ $postingans->title }}?')"
-                        class="text-dark my-auto mx-1 text-decoration-none @if (Auth::user()->role == 'user') d-none @endif"
-                        style="font-size: .95vw;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    @if (Auth::user()->role != 'user')
+                        <a href="#" onClick="editpostingansDetails()"
+                            class="text-dark my-auto mx-1 text-decoration-none" style="font-size: .95vw;"><i
+                                class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    @endif
+                    @if (Auth::user()->role != 'user')
+                        <a href="{{ url('/delete-postingan', $postingans->id) }}"
+                            onclick="return confirm('Are you sure, to delete {{ $postingans->title }}?')"
+                            class="text-dark my-auto mx-1 text-decoration-none" style="font-size: .95vw;"><i
+                                class="fa fa-trash" aria-hidden="true"></i></a>
+                    @endif
                 </div>
             </div>
         </div>
         <h2 id="start_price" class="fw-bold mb-1">Rp. {{ $postingans->start_price }}</h2>
-        <h5 id="endauc" class="mb-4">
+        <h5 id="endauc" class="mb-2">
             Closing date : <b>{{ $postingans->endauc }}</b>
         </h5>
+
+        <h5 class="mb-4" id="status_postingan">Status : <b class="text-info">{{ $postingans->status }}</b><a href="#"
+                class="text-dark ms-2" onClick="setStatus()"><i class="fa fa-edit"></i></a></h5>
 
         @if (count($data_bid) < 1)
             <hr class="border-dark">
@@ -90,35 +97,40 @@
                         onClick="getBidDataDetails({{ $postingans->id }})">See All</a>
                 </div>
             </div>
-            <table class="table table-borderless table-responsive"
-                style="border: 1px solid #5C5C5C; border-radius: 6px;">
-                <thead style="border: 1px solid #5C5C5C; border-radius: 6px;">
+            <table class="table table-secondary table-borderless table-responsive" style="border-radius: 6px;">
+                <thead>
                     <tr>
-                        <th style="border: 1px solid #5C5C5C; border-radius: 6px;" scope="col">No
+                        <th scope="col" style="border-radius: 6px 0px 0 0;">No
                         </th>
-                        <th style="border: 1px solid #5C5C5C; border-radius: 6px;" scope="col">
+                        <th scope="col">
                             Name
                         </th>
-                        <th style="border: 1px solid #5C5C5C; border-radius: 6px;" scope="col">
+                        <th scope="col">
                             Bid
+                        </th>
+                        <th style="border-radius: 0px 6px 0 0;" scope="col">
+                            Date
                         </th>
                     </tr>
                 </thead>
-                <tbody style="border: 1px solid #5C5C5C; border-radius: 6px;">
+                <tbody>
                     @foreach ($data_bid as $bid)
-                        <tr>
-                            <th style="border: 1px solid #5C5C5C; border-radius: 6px;" scope="row">
+                        <tr style="border-top: 1px solid rgb(216, 216, 216);">
+                            <th style="border-radius: 0px 0px 0px 6px;" scope="row">
                                 {{ $i++ }}.
                             </th>
-                            <td style="border: 1px solid #5C5C5C; border-radius: 6px;">
+                            <td>
                                 @if (Auth::user()->name == $bid->user->name)
                                     You
                                 @else
                                     {{ $bid->user->name }}
                                 @endif
                             </td>
-                            <td style="border: 1px solid #5C5C5C; border-radius: 6px;">Rp.
+                            <td>Rp.
                                 {{ $bid->bid }}
+                            </td>
+                            <td style="border-radius: 0px 0px 6px 0px;">
+                                {{ $bid->created_at->diffForHumans() }}
                             </td>
                         </tr>
                     @endforeach
@@ -130,14 +142,16 @@
                 @csrf
                 <h4 class="mb-2 @if (Auth::user()->role == 'admin') d-none @endif">Your bid</h4>
                 <input type="number" name="bidd" id="bidd"
-                    class="form-control bg-transparent remove-focus placeholder cursor mb-3 @if (Auth::user()->role == 'admin') d-none @endif"
-                    required>
-                <button type="submit" class="btn fw-semibold @if (Auth::user()->role == 'admin') d-none @endif"
-                    style="background-color: #C6DE41;">Bid</button>
+                    class="form-control cursor mb-3 @if (Auth::user()->role == 'admin') d-none @endif" required>
+                <button type="submit"
+                    class="btn btn-primary fw-semibold @if (Auth::user()->role == 'admin') d-none @endif">Bid</button>
             </form>
         @endif
         <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Winners will be notified
             via their inbox.</span>
+        <br>
+        <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Note, once you have
+            placed a bid, you cannot cancel it.</span>
     </div>
 </div>
 
@@ -150,12 +164,12 @@
             <li class="nav-item">
                 <a style="font-size: 1.02vw;" class="nav-link text-secondary" href="#">Comment</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a style="font-size: 1.02vw;" class="nav-link text-secondary" href="#">Link</a>
             </li>
             <li class="nav-item">
                 <a style="font-size: 1.02vw;" class="nav-link text-light disabled">Disabled</a>
-            </li>
+            </li> --}}
         </ul>
         <hr class="mt-1 border-dark">
         <h3 class="fw-semibold">Description & Condition</h3>
@@ -168,91 +182,21 @@
 <div class="row p-3 mb-5 d-block">
     <h1 class="mb-3">You may also like</h1>
     <div class="row mx-auto">
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
+        @foreach ($suggestion as $suggest)
+            <div class="col-md-2 rounded p-1 mx-0">
+                <div class="rounded p-4 shadow" style="cursor: pointer;">
+                    <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="{{ $suggest->gambar }}"
+                        alt="">
+                    <h5 class=" fw-semibold mb-1">{{ $suggest->title }}</h5>
+                    <h6 class=" mb-4">{{ $suggest->subtitle }}</h6>
+                    <h6 class=" mb-3">{{ $suggest->endauc }}</h6>
+                    <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
+                    <h6 class=" fw-semibold m-0">{{ $suggest->start_price }}</h6>
+                    <hr class=" my-3 mb-2">
+                    <h6 class=" my-0">{{ $suggest->created_at->diffForHumans() }}</h6>
+                </div>
             </div>
-        </div>
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
-            </div>
-        </div>
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
-            </div>
-        </div>
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
-            </div>
-        </div>
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
-            </div>
-        </div>
-        <div class="col-md-2 rounded p-1 mx-0">
-            <div class="rounded p-4 shadow" style="cursor: pointer;">
-                <img style="width: 19vw; height: 23vh;" class="mb-4 rounded"
-                    src="https://www.primefaces.org/primeblocks-vue/images/blocks/ecommerce/productpage/productpage-1-2.png"
-                    alt="">
-                <h5 class=" fw-semibold mb-1">Product name</h5>
-                <h6 class=" mb-4">Subtitle</h6>
-                <h6 class=" mb-3">Endauc</h6>
-                <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                <h6 class=" fw-semibold m-0">Current offer</h6>
-                <hr class=" my-3 mb-2">
-                <h6 class=" my-0">Price</h6>
-            </div>
-        </div>
-
+        @endforeach
     </div>
 </div>
 
@@ -345,3 +289,12 @@
 <input type="hidden" value="{{ $postingans->endauc }}" id="postingan-endauc">
 <input type="hidden" value="{{ $postingans->descandcond }}" id="postingan-descandcond">
 <input type="hidden" value="{{ $postingans->location }}" id="postingan-location">
+<input type="hidden" value="{{ $postingans->status }}" id="status">
+
+
+<script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
+{{-- <script>
+    $(document).ready(function(){
+        let endauc_input = $('#')
+    });
+</script> --}}

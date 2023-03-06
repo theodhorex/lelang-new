@@ -16,6 +16,8 @@ class PostinganSeeder extends Seeder
     {
         $postingan = [
             [
+                'status' => 'Open',
+                'gambar' => '',
                 'user_id' => '1',
                 'title' => 'Dummy One',
                 'subtitle' => 'this is dummy one',

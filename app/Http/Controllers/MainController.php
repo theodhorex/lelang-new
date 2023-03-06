@@ -59,8 +59,9 @@ class MainController extends Controller
 
     public function postinganDetails($id){
         $postingans = Postingan::find($id);
-        $data_bid = BidData::where('postingan_id', $id)->with('user')->orderBy('bid', 'asc')->limit(5)->get();
-        return view('pages/ajax/postinganDetails', compact(['postingans', 'data_bid']));
+        $data_bid = BidData::where('postingan_id', $id)->with('user')->orderBy('bid', 'desc')->limit(5)->get();
+        $suggestion = Postingan::where('category', $postingans->category)->limit(6)->get();
+        return view('pages/ajax/postinganDetails', compact(['postingans', 'data_bid', 'suggestion']));
     }
 
     public function postinganDetailsUpdate(Request $request, $id){
@@ -122,6 +123,23 @@ class MainController extends Controller
 
         $new_account -> save();
         return redirect('/account-pages');
+    }
+
+    public function searchAccount(Request $request){
+        $user = User::where('name', 'LIKE', '%' . $request -> result . '%');
+    }
+
+    public function getAccountDetailEdit($id){
+        $user = User::find($id);
+
+        return view('pages/ajax/accountDetails', compact('user'));
+    }
+
+    public function deleteAccount($id){
+        $user = User::find($id);
+        $user -> delete();
+
+        return back()->with('success', 'Account deleted successfully!');
     }
 
     public function listItem(Request $request){
@@ -220,23 +238,25 @@ class MainController extends Controller
         return view('pages/search', compact(['latest_postingan', 'get_all']));
     }
 
-    public function history(){
-        $datas = Massage::where('user_id', Auth::user()->id);
-        $data = $datas -> get();
+    public function history(Request $request){
+        // if($request->has('status')){
+        //     $data = BidData::where('category', 'LIKE', '%' . $request->result . '%')->where('user_id', Auth::user()->id);
+
+        //     if($request->status == true){
+        //         return json_encode($data->get());
+        //     }
+        // }else{
+        //     $data = BidData::where('user_id', Auth::user()->id)->latest() -> get();
+        // }
+        $data = BidData::where('user_id', Auth::user()->id)->distinct()->latest()->get();
         return view('pages/history', compact('data'));
     }
 
-
-
-
-
-
-
-
-
-
-
-
+    public function setAuctionStatus(Request $request, $id){
+        $postingan = Postingan::find($id);
+        $postingan -> status = $request -> status;
+        $postingan->save();
+    }
 
 
 
@@ -259,18 +279,18 @@ class MainController extends Controller
 
     public function dateConvert($bulan){
         $namaBulan = [
-            1 => 'Januari',
-            2 => 'Februari',
-            3 => 'Maret',                                       
+            1 => 'January',
+            2 => 'February',
+            3 => 'March',                                       
             4 => 'April',
-            5 => 'Mei',
-            6 => 'Juni',
-            7 => 'Juli',
-            8 => 'Agustus',
+            5 => 'May',
+            6 => 'June',
+            7 => 'July',
+            8 => 'August',
             9 => 'September',
-            10 => 'Oktober',
+            10 => 'October',
             11 => 'November',
-            12 => 'Desember',
+            12 => 'December',
         ];
 
         $result = Carbon::createFromFormat('m/d/Y', $bulan);

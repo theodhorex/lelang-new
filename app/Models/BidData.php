@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Postingan;
+use App\Models\User;
 
 class BidData extends Model
 {
@@ -18,7 +19,7 @@ class BidData extends Model
 
     protected $table = 'bid_data';
 
-    public function postingans(){
+    public function postingan(){
         return $this -> belongsTo(Postingan::class);
     }
 

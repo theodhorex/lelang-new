@@ -33,14 +33,18 @@ Route::middleware("role:admin|officer")->group(function(){
     Route::get('/delete-postingan/{id}', [MainController::class, 'deletePostingan'])->name('delete-postingan');
     Route::get('/account-pages', [MainController::class, 'accountListPages'])->name('account');
     Route::post('/add-account', [MainController::class, 'addAccount'])->name('add-account');
-    Route::get('/list-item', [MainController::class, 'listItem'])->name('list-item');
+    Route::get('/account-detail/{id}', [MainController::class, 'getAccountDetailEdit'])->name('account-edit');
+    Route::get('/delete-account/{id}', [MainController::class, 'deleteAccount'])->name('delete-account');
+    Route::get('/search-account', [MainController::class, 'searchAccount'])->name('search-account');
     Route::post('/send-message/{id}', [MainController::class, 'sendMessage'])->name('send-message');
     Route::get('/stat', function(){
         return view('pages/stat');
     })->name('stat');
+    Route::get('/set-auction/{id}', [MainController::class, 'setAuctionStatus'])->name('set-auction');
 });
 
 
+Route::get('/list-item', [MainController::class, 'listItem'])->name('list-item');
 Route::get('/history', [MainController::class, 'history'])->name('history');
 Route::get('/postingan-details/{id}', [MainController::class, 'postinganDetails'])->name('postingan-details');
 Route::get('/inbox', [MainController::class, 'inbox'])->name('inbox');

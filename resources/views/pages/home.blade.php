@@ -11,156 +11,192 @@
                 </div>
             </div>
             <hr class="border-secondary">
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="card-title fw-semibold mb-2">Item</h4>
-                                    <h6 class="card-text fw-semibold mb-2">
-                                        {{ $postingan->count() }}
-                                    </h6>
-                                    <p class="card-text">
-                                        <b class="text-info">2 New item</b> this week.
-                                    </p>
-                                    {{-- <a href="#" class="card-link">Card link</a>
+            @if (Auth::user()->role != 'user')
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold mb-2">Item</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $postingan->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">2 New item</b> this week.
+                                        </p>
+                                        {{-- <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> --}}
-                                </div>
-                                <div class="col-3">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <a href="#" class="btn btn-primary"><i class="fa fa-square"></i></a>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="card-title fw-semibold mb-2">Account</h4>
-                                    <h6 class="card-text fw-semibold mb-2">
-                                        {{ $account->count() }}
-                                    </h6>
-                                    <p class="card-text">
-                                        <b class="text-info">2 Newly registered</b> this week.
-                                    </p>
-                                </div>
-                                <div class="col-3">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <a href="#" class="btn btn-primary"><i class="fa fa-user"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="card-title fw-semibold">Inbox</h4>
-                                    <h6 class="card-text fw-semibold mb-2">
-                                        {{ $user_reply->count() }}
-                                    </h6>
-                                    <p class="card-text">
-                                        <b class="text-info">2 New inbox</b> this week.
-                                    </p>
-                                </div>
-                                <div class="col-3">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <a href="#" class="btn btn-primary mx-auto"><i class="fa fa-inbox"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="card-title fw-semibold">Customer</h4>
-                                    <h6 class="card-text fw-semibold mb-2">
-                                        {{ $account->where('role', 'user')->count() }}
-                                    </h6>
-                                    <p class="card-text">
-                                        <b class="text-info">2 Newly registered</b> this week.
-                                    </p>
-                                </div>
-                                <div class="col-3">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <a href="#" class="btn btn-primary mx-auto"><i class="fa fa-users"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-md">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row m-1">
-                                <div class="col">
-                                    <h3 class="card-text fw-semibold mb-4">Latest activity</h3>
-                                    @foreach ($postingan as $post)
-                                        <div class="massages mb-3">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5 class="fw-semibold">{{ Str::limit($post->title, 12) }} -
-                                                        {{ str_replace(['[', ']', '"'], '', $account->where('id', $post->user_id)->pluck('name')) }}
-                                                    </h5>
-                                                </div>
-                                                <div class="col">
-                                                    <p class="m-0 float-end">{{ $post->created_at->diffForHumans() }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p>
-                                                {{ Str::limit($post->descandcond, 70) }}
-                                            </p>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-square"></i></a>
                                         </div>
-                                        <hr class="border-secondary">
-                                    @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold mb-2">Account</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $account->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">2 Newly registered</b> this week.
+                                        </p>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-user"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold">Inbox</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $user_reply->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">2 New inbox</b> this week.
+                                        </p>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary mx-auto"><i
+                                                    class="fa fa-inbox"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold">Customer</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $account->where('role', 'user')->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">2 Newly registered</b> this week.
+                                        </p>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary mx-auto"><i
+                                                    class="fa fa-users"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <div class="row m-1">
-                                <div class="col">
-                                    <h3 class="card-text fw-semibold mb-4">Statistic</h3>
-                                    <canvas id="lineChart"></canvas>
+                <div class="row mb-5">
+                    <div class="col-md">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row m-1">
+                                    <div class="col">
+                                        <h3 class="card-text fw-semibold mb-4">Latest activity</h3>
+                                        @foreach ($postingan as $post)
+                                            <div class="massages mb-3">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h5 class="fw-semibold">{{ Str::limit($post->title, 12) }} -
+                                                            {{ str_replace(['[', ']', '"'], '', $account->where('id', $post->user_id)->pluck('name')) }}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="m-0 float-end">{{ $post->created_at->diffForHumans() }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    {{ Str::limit($post->descandcond, 70) }}
+                                                </p>
+                                            </div>
+                                            <hr class="border-secondary">
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row m-1">
+                                    <div class="col">
+                                        <h3 class="card-text fw-semibold mb-4">Statistic</h3>
+                                        <canvas id="lineChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            @if (Auth::user()->role == 'user')
+                <div class="row mb-5">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold mb-2">Your Order</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $your_order->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">2 New item</b> this week.
+                                        </p>
+                                        {{-- <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a> --}}
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-square"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <div class="row">
                 <div class="col">
                     <div class="row d-block">
                         <div class="row mx-2 mb-2">
                             <div class="col d-inline-flex">
                                 <h3>Latest item</h3>
-                                <a class="my-auto mx-3 text-decoration-none fw-semibold " href="#">See all</a>
+                                <a class="my-auto mx-3 text-decoration-none fw-semibold "
+                                    href="{{ url('/list-item') }}">See
+                                    all</a>
                             </div>
                         </div>
                         <div id="result-container" class="row mx-auto">
                             @foreach ($list_item as $list)
                                 <div class="col-md-2 rounded p-1 mx-0">
                                     <div class="rounded p-4 shadow" style="cursor: pointer;" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" onClick="getPostinganDetails({{ $list->id }})">
+                                        data-bs-target="#exampleModal"
+                                        onClick="getPostinganDetails({{ $list->id }})">
                                         <img style="width: 30vh; height: 10vw;" class="mb-4 rounded"
                                             src="{{ $list->gambar }}" alt="">
                                         <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 15) }}</h5>
@@ -179,7 +215,7 @@
             </div>
 
 
-            
+
         </div>
     </div>
 
@@ -285,6 +321,63 @@
                 `<button type="submit" class="btn btn-primary fw-semibold" onClick="event.preventDefault(); document.getElementById('update-postingan-form').submit();">Save</button>`
             );
         }
+
+        function setStatus() {
+            let status = $('#status').val();
+
+            if (status == 'Open') {
+                $('#status_postingan').html(
+                    `Status : <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary active" id="open_button" onClick="openButton()">Open</button>
+                    <button type="button" class="btn btn-primary" id="close_button" onClick="closeButton()">Close</button>
+                </div>`
+                );
+            } else if (status == 'Closed') {
+                $('#status_postingan').html(
+                    `Status : <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary" id="open_button" onClick="openButton()">Open</button>
+                    <button type="button" class="btn btn-primary active" id="close_button" onClick="closeButton()">Close</button>
+                </div>`
+                );
+            }
+        }
+
+        // Open & Close auction
+        function closeButton(){
+            let target_id = $('#id').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('set-auction') }}/" + target_id,
+                data: {
+                    status: 'Closed'
+                },
+                success: function(data){
+                    console.log('Closed!');
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        }
+
+        function openButton(){
+            let target_id = $('#id').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('set-auction') }}/" + target_id,
+                data: {
+                    status: 'Open'
+                },
+                success: function(data){
+                    console.log('Open!');
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        }
+
+
 
         //line
         var ctxL = document.getElementById("lineChart").getContext('2d');

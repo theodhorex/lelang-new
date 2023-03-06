@@ -19,10 +19,8 @@ class PermissionCheck
        
 
         $rolearr = explode("|",$role);
-       //dd($rolearr);
     
         if(in_array(auth()->user()->role, $rolearr)){
-            //dd("hore");
             return $next($request);
         }
         return redirect("/home");

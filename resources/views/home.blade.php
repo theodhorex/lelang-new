@@ -149,7 +149,7 @@
                             </a>
                         </li>
                         <li
-                            class="@if ($route_name == 'list-item') active-indicator rounded @else bg-transparent non-active-color @endif list-group-item borderless @if (Auth::user()->role != 'admin') d-none @endif">
+                            class="@if ($route_name == 'list-item') active-indicator rounded @else bg-transparent non-active-color @endif list-group-item borderless">
                             <i class="fa fa-list text-dark" aria-hidden="true"></i>
                             <a href="/list-item"
                                 class="remove-hover text-decoration-none @if ($route_name == 'list-item') text-dark @else non-active-color @endif">
