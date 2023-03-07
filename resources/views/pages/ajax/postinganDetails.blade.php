@@ -81,8 +81,9 @@
             Closing date : <b>{{ $postingans->endauc }}</b>
         </h5>
 
-        <h5 class="mb-4" id="status_postingan">Status : <b class="text-info">{{ $postingans->status }}</b><a href="#"
-                class="text-dark ms-2" onClick="setStatus()"><i class="fa fa-edit"></i></a></h5>
+        <h5 class="mb-4" id="status_postingan">Status : <b
+                class="@if ($postingans->status == 'Open') text-info @elseif($postingans->status == 'Closed') text-danger @endif">{{ $postingans->status }}</b><a
+                href="#" class="text-dark ms-2 @if(Auth::user()->role == 'user') d-none @endif" onClick="setStatus()"><i class="fa fa-edit"></i></a></h5>
 
         @if (count($data_bid) < 1)
             <hr class="border-dark">
@@ -137,21 +138,24 @@
                 </tbody>
             </table>
         @endif
-        @if (Auth::user()->role == 'user')
-            <form action="{{ url('/bid-send', $postingans->id) }}" method="post" class="mb-2">
-                @csrf
-                <h4 class="mb-2 @if (Auth::user()->role == 'admin') d-none @endif">Your bid</h4>
-                <input type="number" name="bidd" id="bidd"
-                    class="form-control cursor mb-3 @if (Auth::user()->role == 'admin') d-none @endif" required>
-                <button type="submit"
-                    class="btn btn-primary fw-semibold @if (Auth::user()->role == 'admin') d-none @endif">Bid</button>
-            </form>
+        @if ($postingans->status == 'Open')
+            @if (Auth::user()->role == 'user')
+                <form action="{{ url('/bid-send', $postingans->id) }}" method="post" class="mb-2">
+                    @csrf
+                    <h4 class="mb-2 @if (Auth::user()->role == 'admin') d-none @endif">Your bid</h4>
+                    <input type="number" name="bidd" id="bidd"
+                        class="form-control cursor mb-3 @if (Auth::user()->role == 'admin') d-none @endif" required>
+                    <button type="submit"
+                        class="btn btn-primary fw-semibold @if (Auth::user()->role == 'admin') d-none @endif">Bid</button>
+                </form>
+            @endif
+            <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Winners will be
+                notified
+                via their inbox.</span>
+            <br>
+            <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Note, once you have
+                placed a bid, you cannot cancel it.</span>
         @endif
-        <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Winners will be notified
-            via their inbox.</span>
-        <br>
-        <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Note, once you have
-            placed a bid, you cannot cancel it.</span>
     </div>
 </div>
 

@@ -10,6 +10,7 @@ use App\Models\Activity;
 use App\Models\User;
 use App\Models\UserReply;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -36,8 +37,9 @@ class HomeController extends Controller
         $list_item = Postingan::latest()->limit(6)->get();
         $account = User::all();
         $user_reply = UserReply::all();
-        $your_order = BidData::where('user_id', Auth::user()->id)->first();
-        return view('pages/home', compact(['account', 'postingan', 'user_reply', 'list_item', 'your_order']));
+        $your_order = BidData::where('user_id', Auth::user()->id)->distinct()->get('postingan_id');
+        $new_order = BidData::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        return view('pages/home', compact(['account', 'postingan', 'user_reply', 'list_item', 'your_order', 'new_order']));
     }
 
     public function perform()

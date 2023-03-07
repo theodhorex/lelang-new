@@ -59,7 +59,7 @@ class MainController extends Controller
 
     public function postinganDetails($id){
         $postingans = Postingan::find($id);
-        $data_bid = BidData::where('postingan_id', $id)->with('user')->orderBy('bid', 'desc')->limit(5)->get();
+        $data_bid = BidData::where('postingan_id', $id)->with('user')->orderByRaw('CAST(REPLACE(bid, ",", "") AS UNSIGNED) DESC')->limit(5)->get();
         $suggestion = Postingan::where('category', $postingans->category)->limit(6)->get();
         return view('pages/ajax/postinganDetails', compact(['postingans', 'data_bid', 'suggestion']));
     }
@@ -248,7 +248,7 @@ class MainController extends Controller
         // }else{
         //     $data = BidData::where('user_id', Auth::user()->id)->latest() -> get();
         // }
-        $data = BidData::where('user_id', Auth::user()->id)->distinct()->latest()->get();
+        $data = BidData::where('user_id', Auth::user()->id)->distinct()->latest()->get(['postingan_id']);
         return view('pages/history', compact('data'));
     }
 

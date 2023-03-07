@@ -164,7 +164,7 @@
                                             {{ $your_order->count() }}
                                         </h6>
                                         <p class="card-text">
-                                            <b class="text-info">2 New item</b> this week.
+                                            <b class="text-info">{{ $new_order->count() }} New item</b> this week.
                                         </p>
                                         {{-- <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> --}}
