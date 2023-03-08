@@ -18,9 +18,20 @@ use App\Http\Livewire\Counter;
 |
 */
 
+// Landing page
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('landing-page/landing-page');
+})->name('home');
+Route::get('/landing-page/about-us', function () {
+    return view('landing-page/about_us');
+})->name('about-us');
+Route::get('/landing-page/contact-us', function () {
+    return view('landing-page/contact_us');
+})->name('contact-us');
+
+
+
+
 
 Route::get('/profile', [ProfileController::class, 'profilePages'])->name('profile');
 Route::post('/profiles', [ProfileController::class, 'updateProfile'])->name('update-profile');
