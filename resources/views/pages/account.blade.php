@@ -30,7 +30,8 @@
             <div class="col">
                 <div class="input-group">
                     <span style="border: none;" class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
-                    <input style="border: none;" id="account_search" type="text" placeholder="Search here..." class="form-control">
+                    <input style="border: none;" id="account_search" type="text" placeholder="Search here..."
+                        class="form-control">
                 </div>
             </div>
         </div>
@@ -60,7 +61,7 @@
                     </button>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-6">
                     <div class="rounded p-3 px-4 shadow">
                         <h4>Active admin account</h4>
@@ -101,7 +102,38 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> --}}
+        </div>
+
+        <div class="px-3 my-3">
+            <table class="table table-bordered rounded">
+                @php
+                    $i = 1;
+                @endphp
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Created at</th>
+                        <th scope="col" class="fit-content">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($account as $item)
+                        <tr>
+                            <th scope="row">{{ $i++ }}</th>
+                            <td>{{ $item->name }}</td>
+                            <td class="text-capitalize">{{ $item->role }}</td>
+                            <td>{{ $item->created_at->diffForHumans() }}</td>
+                            <td class="fit-content">
+                                <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -173,8 +205,8 @@
 
     <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
-            $('#account_search').on('keyup', function(){
+        $(document).ready(function() {
+            $('#account_search').on('keyup', function() {
                 // console.log($(this).val());
 
                 $.ajax({
@@ -183,15 +215,16 @@
                     data: {
                         nama: $(this).val()
                     },
-                    success: function(data){
+                    success: function(data) {
                         console.log('Work!');
                     },
-                    error: function(err){
+                    error: function(err) {
                         console.log(err);
                     }
                 });
             });
         });
+
         function getAccountDetail(id) {
             $.get("{{ url('/account-detail') }}/" + id, {}, function(data, status) {
                 // $("#imported-pages").html(data);

@@ -3,7 +3,7 @@
     <div class="row mb-5">
         <div class="col-6">
             <h1 class="fw-semibold mb-0" style="font-size: 3.5vw;">Celtic Auction</h1>
-            <h2 class="fw-semibold">Find your dream item here.</h2>
+            <h2 class="fw-semibold">Find your <b class="text-primary">dream</b> item here.</h2>
             <br>
             <p style="font-size: .9vw;" class="mb-4 text-secondary">Lorem ipsum, dolor sit amet consectetur
                 adipisicing elit. Dolorem,
@@ -12,6 +12,10 @@
                 consequuntur modi perspiciatis esse ut ipsam neque quas vitae numquam vel! Doloribus,
                 voluptatum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
                 necessitatibus!</p>
+            <p style="font-size: .9vw;" class="mb-4 text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Eligendi nihil molestiae possimus! Aspernatur, culpa quos aliquam dolorum quasi debitis dolor id doloribus,
+                autem, accusantium blanditiis? Beatae quam dolorum alias et repudiandae! Laborum sint id delectus, nulla
+                velit magni aliquam voluptas sunt neque non, quae vitae. Ab voluptatum nam sapiente at?</p>
             <div class="row">
                 <div class="col">
                     <div>

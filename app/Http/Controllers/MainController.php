@@ -86,7 +86,7 @@ class MainController extends Controller
         return redirect('/home');
     }
 
-    public function deletePostingan($id){
+    public function deletePostingan(Request $request, $id){
         $target = Postingan::find($id);
         $bid_data = BidData::where('postingan_id', $id);
         $activity = new Activity;
@@ -104,7 +104,8 @@ class MainController extends Controller
     public function accountListPages(){
         $getAdminAccount = User::where('role', 'admin')->get();
         $getOfficerAccount = User::where('role', 'officer')->get();
-        return view('pages/account', compact(['getAdminAccount', 'getOfficerAccount']));
+        $account = User::all();
+        return view('pages/account', compact(['getAdminAccount', 'getOfficerAccount', 'account']));
     }
 
     public function addAccount(Request $request){
@@ -187,10 +188,12 @@ class MainController extends Controller
         if(Auth::user()->role == 'user'){
             $user_id = Auth::user()->id;
             $get_message = Massage::where('user_id', $user_id)->latest()->get();
+            $is_replied = UserReply::all();
+            return view('pages/inbox', compact(['get_message', 'is_replied']));
         }else if(Auth::user()->role == 'admin'){
             $get_message = UserReply::all();
+            return view('pages/inbox', compact('get_message'));
         }
-        return view('pages/inbox', compact('get_message'));
     }
 
     public function inboxReply(Request $request){
@@ -211,7 +214,8 @@ class MainController extends Controller
 
     public function getInboxDetails($id){
         $messages = Massage::find($id);
-        return view('pages/ajax/inboxDetails', compact('messages'));
+        $user_reply = UserReply::find($id);
+        return view('pages/ajax/inboxDetails', compact(['messages', 'user_reply']));
     }
  
     public function search(Request $request){
@@ -229,7 +233,7 @@ class MainController extends Controller
                 return json_encode($get_all->get());
             } 
         }else{
-            $latest_postingan = Postingan::latest()->limit(6)->get();
+            $latest_postingan = Postingan::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->limit(6)->get();
             $get_all = Postingan::inRandomOrder()->get();
         }
 

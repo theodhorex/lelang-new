@@ -42,14 +42,17 @@
         }
     </style>
     <div class="row">
-        <div class="col">
+        <div class="col py-3">
             <div class="row">
-                <div class="col d-flex">
-                    <h2>List Item</h2>
+                <div class="col">
+                    <div class="input-group">
+                        <span style="border: none;" class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
+                        <input style="border: none;" type="text" placeholder="Search here..." class="form-control">
+                    </div>
                 </div>
             </div>
         </div>
-        <hr class="border-dark mb-4">
+        <hr class="border-secondary mb-4">
         <!-- Div for category -->
         @if (count($listItem) < 1)
             <img class="d-block mx-auto" src="{{ asset('asset/No data found.svg') }}" style="width: 20vw; height: 38vh;"
@@ -92,7 +95,7 @@
                                 data-bs-target="#exampleModal" onClick="getPostinganDetails({{ $list->id }})">
                                 <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="{{ $list->gambar }}"
                                     alt="">
-                                <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 15) }}</h5>
+                                <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 13) }}</h5>
                                 <h6 class=" mb-4">{{ $list->subtitle }}</h6>
                                 <h6 class=" mb-3">{{ $list->endauc }}</h6>
                                 <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
@@ -133,12 +136,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1" role="dialog" style="z-index: 1600;">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid #E6E6E6;">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Bid Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (Auth::user()->role == 'user')
+                        <div id="imported-bid-data-details"></div>
+                    @else
+                        <div id="imported-bid-data-details"></div>
+                    @endif
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #E6E6E6;">
+                    <button class="btn btn-primary fw-semibold" data-bs-target="#exampleModal"
+                        data-bs-toggle="modal">Back to first</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
     <script>
         function getPostinganDetails(id) {
             $.get("{{ url('/postingan-details') }}/" + id, {}, function(data, status) {
                 $("#imported-page").html(data);
                 $("#exampleModal").show();
+            });
+        }
+
+        function getBidDataDetails(id) {
+            $.get("{{ url('/get-bid-data-details') }}/" + id, {}, function(data, status) {
+                $("#imported-bid-data-details").html(data);
+                $("#exampleModalToggle2").show();
             });
         }
 
@@ -188,19 +221,20 @@
 
                     var col = data.map(function(e) {
                         return `
-                <div class="col-md-3 rounded p-1">
-                    <div class="rounded p-4" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        style="cursor: pointer; background-color: #0E2930;" onClick="getPostinganDetails(${e['id']})">
-                        <img style="width: 19vw; height: 33vh;" class="mb-4 rounded" src="${e['gambar']}" alt="">
-                        <h5 class="text-light fw-semibold mb-1">${e['title']}</h5>
-                        <h6 class="text-light mb-4">${e['subtitle']}</h6>
-                        <h6 class="text-light mb-3">${e['endauc']}</h6>
-                        <h6 class="text-light fw-semibold m-0 mb-1">Current offer</h6>
-                        <h6 class="text-light fw-semibold m-0">Rp. ${e["start_price"]}</h6>
-                        <hr class="border-light my-3 mb-2">
-                        <h6 class="text-light my-0"></h6>
-                    </div>
-                </div>
+                <div class="col-md-2 rounded p-1 mx-0">
+                                <div class="rounded p-4 shadow cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    onClick="getPostinganDetails(${e['id']})">
+                                    <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="${e['gambar']}"
+                                        alt="">
+                                    <h5 class=" fw-semibold mb-1">${e['title']}</h5>
+                                    <h6 class=" mb-4">${e['subtitle']}</h6>
+                                    <h6 class=" mb-3">${e['endauc']}</h6>
+                                    <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
+                                    <h6 class=" fw-semibold m-0">Rp. ${e["start_price"]}</h6>
+                                    <hr class=" my-3 mb-2">
+                                    <h6 class=" my-0"></h6>
+                                </div>
+                            </div>
                 `;
                     });
                     $('#result-container').html(col);

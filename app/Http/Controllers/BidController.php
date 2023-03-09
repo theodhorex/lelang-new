@@ -23,7 +23,7 @@ class BidController extends Controller
     }
 
     public function getBidDataDetails($id){
-        $bid_data = BidData::where('postingan_id', $id)->with('user')->orderBy('bid', 'asc')->get();
+        $bid_data = BidData::where('postingan_id', $id)->with('user')->orderByRaw('CAST(REPLACE(bid, ",", "") AS UNSIGNED) DESC')->get();
         $postingan_id = $id;
         return view('pages/ajax/bidDataDetails', compact(['bid_data', 'postingan_id']));
     }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\User;
 use App\Models\Massage;
+use App\Models\Postingan;
 
 class UserReply extends Model
 {
@@ -25,14 +26,18 @@ class UserReply extends Model
     protected $table = 'user_replies';
 
     public function user(){
-        return $this -> hasOne(User::class, 'user_id', 'id');
+        return $this -> hasOne(User::class, 'id', 'user_id');
     }
 
     public function inbox(){
-        return $this -> hasOne(Massage::class, 'inbox_id', 'id');
+        return $this -> hasOne(Massage::class, 'id', 'inbox_id');
     }
 
     public function bidData(){
-        return $this -> hasMany(BidData::class,"postingan_id", "id");
+        return $this -> hasMany(BidData::class, 'id', 'postingan_id');
+    }
+
+    public function postingan(){
+        return $this -> hasOne(Postingan::class, 'id', 'postingan_id');
     }
 }

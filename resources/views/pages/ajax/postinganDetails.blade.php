@@ -109,8 +109,11 @@
                         <th scope="col">
                             Bid
                         </th>
-                        <th style="border-radius: 0px 6px 0 0;" scope="col">
+                        <th scope="col">
                             Date
+                        </th>
+                        <th style="border-radius: 0px 6px 0 0;" scope="col">
+                            Status
                         </th>
                     </tr>
                 </thead>
@@ -130,8 +133,19 @@
                             <td>Rp.
                                 {{ $bid->bid }}
                             </td>
-                            <td style="border-radius: 0px 0px 6px 0px;">
+                            <td>
                                 {{ $bid->created_at->diffForHumans() }}
+                            </td>
+                            <td style="border-radius: 0px 0px 6px 0px;">
+                                @if(Auth::user()->role == 'user')
+                                    @if ($bid->postingan->winner == Auth::user()->name)
+                                        Winner
+                                    @endif
+                                @else
+                                    @if ($bid->postingan->winner == $bid->user->name)
+                                        Winner
+                                    @endif
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -297,8 +311,9 @@
 
 
 <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
-{{-- <script>
-    $(document).ready(function(){
-        let endauc_input = $('#')
-    });
-</script> --}}
+<script>
+    function setWinner(id, name){
+        $('#winner_name').val(name);
+        $('#winner_id').val(id);
+    }
+</script>

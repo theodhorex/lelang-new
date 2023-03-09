@@ -1,4 +1,5 @@
 @extends('home')
+@inject('carbon', 'Carbon\Carbon')
 @section('content')
     <div class="row mt-3">
         <div class="col">
@@ -20,10 +21,10 @@
                                     <div class="col">
                                         <h4 class="card-title fw-semibold mb-2">Item</h4>
                                         <h6 class="card-text fw-semibold mb-2">
-                                            {{ $postingan->count() }}
+                                            {{ $total_postingan->count() }}
                                         </h6>
                                         <p class="card-text">
-                                            <b class="text-info">2 New item</b> this week.
+                                            <b class="text-info">{{ $new_postingan->count() }} New item</b> this week.
                                         </p>
                                         {{-- <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> --}}
@@ -47,7 +48,7 @@
                                             {{ $account->count() }}
                                         </h6>
                                         <p class="card-text">
-                                            <b class="text-info">2 Newly registered</b> this week.
+                                            <b class="text-info">{{ $new_account->count() }} Newly registered</b> this week.
                                         </p>
                                     </div>
                                     <div class="col-3">
@@ -89,10 +90,11 @@
                                     <div class="col">
                                         <h4 class="card-title fw-semibold">Customer</h4>
                                         <h6 class="card-text fw-semibold mb-2">
-                                            {{ $account->where('role', 'user')->count() }}
+                                            {{ $customer->count() }}
                                         </h6>
                                         <p class="card-text">
-                                            <b class="text-info">2 Newly registered</b> this week.
+                                            <b class="text-info">{{ $new_customer->count() }} Newly registered</b> this
+                                            week.
                                         </p>
                                     </div>
                                     <div class="col-3">
@@ -165,6 +167,30 @@
                                         </h6>
                                         <p class="card-text">
                                             <b class="text-info">{{ $new_order->count() }} New item</b> this week.
+                                        </p>
+                                        {{-- <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a> --}}
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-square"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="card-title fw-semibold mb-2">Your Inbox</h4>
+                                        <h6 class="card-text fw-semibold mb-2">
+                                            {{ $user_inbox->count() }}
+                                        </h6>
+                                        <p class="card-text">
+                                            <b class="text-info">{{ $new_user_inbox->count() }} New item</b> this week.
                                         </p>
                                         {{-- <a href="#" class="card-link">Card link</a>
                                     <a href="#" class="card-link">Another link</a> --}}
@@ -343,7 +369,7 @@
         }
 
         // Open & Close auction
-        function closeButton(){
+        function closeButton() {
             let target_id = $('#id').val();
             $.ajax({
                 type: "GET",
@@ -351,16 +377,16 @@
                 data: {
                     status: 'Closed'
                 },
-                success: function(data){
+                success: function(data) {
                     console.log('Closed!');
                 },
-                error: function(err){
+                error: function(err) {
                     console.log(err);
                 }
             });
         }
 
-        function openButton(){
+        function openButton() {
             let target_id = $('#id').val();
             $.ajax({
                 type: "GET",
@@ -368,10 +394,10 @@
                 data: {
                     status: 'Open'
                 },
-                success: function(data){
+                success: function(data) {
                     console.log('Open!');
                 },
-                error: function(err){
+                error: function(err) {
                     console.log(err);
                 }
             });
