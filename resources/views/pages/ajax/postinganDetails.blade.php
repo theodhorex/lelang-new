@@ -83,7 +83,8 @@
 
         <h5 class="mb-4" id="status_postingan">Status : <b
                 class="@if ($postingans->status == 'Open') text-info @elseif($postingans->status == 'Closed') text-danger @endif">{{ $postingans->status }}</b><a
-                href="#" class="text-dark ms-2 @if(Auth::user()->role == 'user') d-none @endif" onClick="setStatus()"><i class="fa fa-edit"></i></a></h5>
+                href="#" class="text-dark ms-2 @if (Auth::user()->role == 'user') d-none @endif"
+                onClick="setStatus()"><i class="fa fa-edit"></i></a></h5>
 
         @if (count($data_bid) < 1)
             <hr class="border-dark">
@@ -137,7 +138,7 @@
                                 {{ $bid->created_at->diffForHumans() }}
                             </td>
                             <td style="border-radius: 0px 0px 6px 0px;">
-                                @if(Auth::user()->role == 'user')
+                                @if (Auth::user()->role == 'user')
                                     @if ($bid->postingan->winner == Auth::user()->name)
                                         Winner
                                     @endif
@@ -265,24 +266,46 @@
                 </ul>
             </div>
             <div class="col-6 px-4 pt-2">
-                <h3>Page</h3>
-                <ul class="list-group list-group-flush border-none">
-                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                        style="color: #7E7E7E; cursor: pointer;">
-                        Home</li>
-                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                        style="color: #7E7E7E; cursor: pointer;">
-                        Account</li>
-                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                        style="color: #7E7E7E; cursor: pointer;">
-                        Form</li>
-                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                        style="color: #7E7E7E; cursor: pointer;">
-                        List item</li>
-                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                        style="color: #7E7E7E; cursor: pointer;">
-                        Stat</li>
-                </ul>
+                @if (Auth::user()->role == 'user')
+                    <h3>Page</h3>
+                    <ul class="list-group list-group-flush border-none">
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a class="text-decoration-none text-secondary" href="{{ url('/home') }}">Home</a>
+                        </li>
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a href="{{ url('/list-item') }}" class="text-decoration-none text-secondary">List
+                                Item</a>
+                        </li>
+                    </ul>
+                @else
+                    <h3>Page</h3>
+                    <ul class="list-group list-group-flush border-none">
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a class="text-decoration-none text-secondary" href="{{ url('/home') }}">Home</a>
+                        </li>
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a class="text-decoration-none text-secondary"
+                                href="{{ url('/account-pages') }}">Account</a>
+                        </li>
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a class="text-decoration-none text-secondary" href="{{ url('/form') }}">Form</a>
+                        </li>
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a href="{{ url('/list-item') }}" class="text-decoration-none text-secondary">List
+                                Item</a>
+                        </li>
+                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                            style="color: #7E7E7E; cursor: pointer;">
+                            <a href="{{ url('/stat') }}" class="text-decoration-none text-secondary">Stat</a>
+                        </li>
+                    </ul>
+                @endif  
             </div>
         </div>
     </div>
@@ -312,7 +335,7 @@
 
 <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
 <script>
-    function setWinner(id, name){
+    function setWinner(id, name) {
         $('#winner_name').val(name);
         $('#winner_id').val(id);
     }

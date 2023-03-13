@@ -52,8 +52,7 @@
                         <!-- <span class="text-light my-auto ms-4">Upload your photos here. Max size 2MB</span> -->
                         <i id="removed" class="fa fa-file-image-o my-auto me-3"
                             style="font-size: 1.7vw; color: #363636;" aria-hidden="true"></i>
-                        <span id="removedd" class="my-auto" style="color: #363636">Upload your photos here. Max size
-                            1MB</span>
+                        <span id="removedd" class="my-auto" style="color: #363636">Upload your photos here.</span>
                     </div>
                     <div class="col-8 float-end d-block my-auto">
                         <label class="float-end rounded p-2 fw-semibold text-secondary" for="uploadFile"

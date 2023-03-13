@@ -62,8 +62,12 @@
                 </div>
                 <div class="col">
                     <div class="float-end">
-                        <a href="/login" class="btn btn-primary fw-semibold">Login</a>
-                        <a href="/register" class="btn btn-primary fw-semibold">Register</a>
+                        @if (Auth::user())
+                            <a href="/home" class="btn btn-primary fw-semibold">Home</a>
+                        @else
+                            <a href="/login" class="btn btn-primary fw-semibold">Login</a>
+                            <a href="/register" class="btn btn-primary fw-semibold">Register</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -145,7 +149,7 @@
     <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            
+
         });
     </script>
 </body>

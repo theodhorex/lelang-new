@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col">
                     <div>
-                        <a href="{{ url('/landing-page/contact-us') }}" class="btn btn-primary fw-semibold">Contact us</a>
+                        <a href="{{ url('/landing-page/contact-us') }}" class="btn btn-primary shadow fw-semibold">Contact us</a>
                         <a href="{{ url('/landing-page/about-us') }}"
                             class="btn btn-transparent shadow fw-semibold ms-3">Learn more</a>
                     </div>
@@ -48,18 +48,18 @@
                     alt="amazon" style="width: 8vw;">
             </a>
             <a href="https://www.marlboro.id/">
-                <img class="mx-3" src="https://cdn.freebiesupply.com/logos/thumbs/2x/marlboro-logo.png" alt="marlboro"
+                <img class="mx-3" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Nabati_brand_logo.png" alt="marlboro"
                     style="width: 8vw;">
             </a>
             <a href="https://www.sampoernacareer.id/">
-                <img class="mx-3" src="{{ asset('asset/sampoerna.png') }}" alt="sampoerna" style="width: 8vw;">
+                <img class="mx-3" src="https://jacobis.co.id/wp-content/uploads/2016/03/Logo-Brand_0002_Logo-Khong-Guan.png" alt="sampoerna" style="width: 8vw;">
             </a>
             <a href="https://www.djarum.com/home#sec-1">
-                <img class="mx-3" src="http://depopipa.co.id/wp-content/uploads/2016/01/DJARUM.png" alt="djarum"
+                <img class="mx-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/AIM_Biscuits_logo.svg/1200px-AIM_Biscuits_logo.svg.png" alt="djarum"
                     style="width: 8vw;">
             </a>
             <a href="https://www.gudanggaramtbk.com/">
-                <img class="mx-3" src="{{ asset('asset/gudang-garam.png') }}" alt="gudang garam" style="width: 8vw;">
+                <img class="mx-3" src="https://seeklogo.com/images/R/roma-biscuit-logo-E94D2E4C4A-seeklogo.com.png" alt="gudang garam" style="width: 8vw;">
             </a>
         </div>
     </div>

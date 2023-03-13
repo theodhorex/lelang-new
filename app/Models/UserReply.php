@@ -30,7 +30,7 @@ class UserReply extends Model
     }
 
     public function inbox(){
-        return $this -> hasOne(Massage::class, 'id', 'inbox_id');
+        return $this -> hasOne(Massage::class, 'id', 'massage_id');
     }
 
     public function bidData(){

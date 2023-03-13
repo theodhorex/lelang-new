@@ -1,4 +1,8 @@
+@if (Auth::user()->role == 'user')
 <input type="hidden" id="postingan_title" name="" value="{{ $messages->postingan->title }}">
+@else
+<input type="hidden" id="postingan_title" name="" value="{{ $user_reply->postingan->title }}">
+@endif
 <style>
     .main-color {
         color: #C6DE41;
@@ -36,25 +40,21 @@
         cursor: pointer;
     }
 </style>
+{{-- @if (Auth::user()->role == 'user') --}}
 @if (Auth::user()->role == 'user')
     <div class="row mx-5 my-2">
         <div class="col">
             <div class="row mb-4">
                 <div class="col">
                     <div class="row">
-                        <div class="col-6">
-                            <h1 class="fw-bold">{{ $messages->postingan->title }}</h1>
-                        </div>
-                        <div class="col-6 my-auto">
-                            <div class="d-inline-flex float-end">
-                                <h4 class="py-0 my-0"><i class="fa fa-trash me-2 me-3"></i></h4>
-                            </div>
+                        <div class="col">
+                            <h3 class="fw-bold">{{ $messages->postingan->title }} | {{ $messages->postingan->category }}</h3>
                         </div>
                     </div>
                     <div class="col d-inline-flex">
                         <h5 class="me-3 text-primary">System</h5>
                         <div style="background-color: #9CA4A6; width: .1vw; height: 2.3vh;" class="rounded me-3"></div>
-                        <span class="text-secondary">{{ $messages->created_at->diffForHumans() }}</span>
+                        <span class="text-secondary">{{ date('d F Y', strtotime($messages->created_at)) }} at {{ date('H:i', strtotime($messages->created_at)) }}</span>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,78 @@
                 <div class="col">
                     <div class="row">
                         <div class="col-6">
+                            <h3 class="fw-bold">{{ $user_reply->postingan->title }}</h3>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <div class="d-inline-flex float-end">
+                                <h4 class="py-0 my-0"><i class="fa fa-trash me-2 me-3"></i></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-inline-flex">
+                        <h5 class="me-3 text-primary">System</h5>
+                        <div style="background-color: #9CA4A6; width: .1vw; height: 2.3vh;" class="rounded me-3"></div>
+                        <span class="text-secondary">{{ date('d F Y', strtotime($user_reply->created_at)) }} at {{ date('H:i', strtotime($user_reply->created_at)) }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col">
+                    <p class="fs-5" style="text-align: justify;">
+                        {{ $user_reply->inbox->massage }}
+                    </p>
+                </div>
+            </div>
+            <div class="row mt-5 mb-4">
+                <div class="col">
+                    <span class="fw-semibold">{{ \Carbon\Carbon::parse($user_reply->created_at)->format('d/m/Y') }}</span>
+                    <br>
+                    <span>Celtic Auction ID</span>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="row mb-4">
+                        <h5 class="py-0 my-0 fw-semibold"><i
+                                class="fa fa-reply me-2 me-3 text-dark mb-4"></i> Replied</h5>
+                        <div class="col d-inline-flex">
+                            <h5 class="me-3 text-primary">{{ $user_reply->user->name }}</h5>
+                            <div style="background-color: #9CA4A6; width: .1vw; height: 2.3vh;" class="rounded me-3">
+                            </div>
+                            <span class="text-secondary">{{ date('d F Y', strtotime($user_reply->created_at)) }} at {{ date('H:i', strtotime($user_reply->created_at)) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col">
+                        <p class="fs-5" style="text-align: justify;">
+                            <b>Receipent Name : </b>{{ $user_reply->receipent_name }}
+                        </p>
+                        <p class="fs-5" style="text-align: justify;">
+                            <b>Address : </b>{{ $user_reply->address }}
+                        </p>
+                        <p class="fs-5" style="text-align: justify;">
+                            <b>Phone Number : </b>{{ $user_reply->phone_number }}
+                        </p>
+                        <p class="fs-5" style="text-align: justify;">
+                            <b>Postal Code : </b>{{ $user_reply->postal_code }}
+                        </p>
+                        <p class="fs-5" style="text-align: justify;">
+                            <b>Description : </b>{{ $user_reply->desc }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+{{-- @else
+    <div class="row mx-5 my-2">
+        <div class="col">
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-6">
                             <h1 class="fw-bold">{{ $messages->postingan->title }}</h1>
                         </div>
                         <div class="col-6 my-auto">
@@ -172,4 +244,5 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}
+

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Postingan;
+use App\Models\UserReply;
 
 class Massage extends Model
 {
@@ -15,7 +16,8 @@ class Massage extends Model
         'massage',
         'admin_id',
         'user_id',
-        'postingan_id'
+        'postingan_id',
+        'is_reply',
     ];
 
     public function postingan(){
@@ -28,5 +30,9 @@ class Massage extends Model
 
     public function officer(){
         return $this -> hasOne(User::class, 'id', 'officer_id');
+    }
+
+    public function isReplies(){
+        return $this -> hasOne(UserReply::class);
     }
 }

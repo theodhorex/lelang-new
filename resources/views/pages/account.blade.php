@@ -24,6 +24,11 @@
         .cursor {
             cursor: pointer;
         }
+
+        .fit {
+            white-space: nowrap;
+            width: 1%;
+        }
     </style>
     <div class="row mb-5">
         <div class="row mt-2">
@@ -49,60 +54,25 @@
                     </div>
                 </div>
             @endif
-            <div class="row">
-                {{-- <div class="col">
-                <a href="#" style="font-size: 1.3vw;" class="fw-semibold ms-1 text-dark"><i class="fa fa-edit"></i></a>
-                <a href="#" style="font-size: 1.3vw;" class="fw-semibold ms-1 text-dark"><i class="fa fa-trash"></i></a>
-            </div> --}}
+            <div class="row px-1">
                 <div class="col">
-                    <button type="button" class="btn btn-primary mb-3 float-end fw-semibold" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Add account
-                    </button>
+                    <label for="" class="form-label">Role</label>
+                    <select name="role_filter" id="role_filter" class="form-control w-50">
+                        <option value="" disabled selected>-- Role Filter --</option>
+                        <option value="admin">Admin</option>
+                        <option value="officer">Officer</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <div class="float-end">
+                        <label for=""></label><br>
+                        <button type="button" class="btn btn-primary mb-3 fw-semibold" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Add account
+                        </button>
+                    </div>
                 </div>
             </div>
-            {{-- <div class="row">
-                <div class="col-6">
-                    <div class="rounded p-3 px-4 shadow">
-                        <h4>Active admin account</h4>
-                        <hr class="border-dark">
-                        @foreach ($getAdminAccount as $ga)
-                            <h5 class="d-flex"><input type="checkbox" name="" id=""
-                                    value="{{ $ga->id }}" class="form-check-input m-0 p-0 me-2">
-                                {{ $ga->name }} - <span class="my-auto mx-2"
-                                    style="font-size: 0.7vw;">Administrator</span>
-                                <div class="float-end">
-                                    <a href="#" style="font-size: 1vw;"
-                                        class="fw-semibold ms-1 text-dark cursor-pointer"
-                                        onClick="getAccountDetail({{ $ga->id }})"><i class="fa fa-edit"></i></a>
-                                    <a href="#" style="font-size: 1vw;" class="fw-semibold ms-1 text-dark"><i
-                                            class="fa fa-trash"></i></a>
-                                </div>
-                            </h5>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="rounded p-3 px-4 shadow">
-                        <h4>Active officer account</h4>
-                        <hr class="border-dark">
-                        @foreach ($getOfficerAccount as $go)
-                            <h5 class=""><input type="checkbox" name="" id=""
-                                    value="{{ $go->id }}" class="form-check-input m-0 p-0 me-2">
-                                {{ $go->name }} - <span class="my-auto mx-2" style="font-size: 0.7vw;">Officer</span>
-                                <div class="float-end">
-                                    <a href="#" style="font-size: 1vw;" class="fw-semibold ms-1 text-dark"
-                                        onClick="getAccountDetail({{ $go->id }})"><i
-                                            class="fa
-                                        fa-edit"></i></a>
-                                    <a style="font-size: 1vw;" onClick="deleteAccount({{ $go->id }})"
-                                        class="fw-semibold ms-1 text-dark"><i class="fa fa-trash"></i></a>
-                                </div>
-                            </h5>
-                        @endforeach
-                    </div>
-                </div>
-            </div> --}}
         </div>
 
         <div class="px-3 my-3">
@@ -112,23 +82,26 @@
                 @endphp
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" class="text-center fit px-3">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Role</th>
                         <th scope="col">Created at</th>
-                        <th scope="col" class="fit-content">Action</th>
+                        <th scope="col" class="fit text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="target_container">
                     @foreach ($account as $item)
                         <tr>
-                            <th scope="row">{{ $i++ }}</th>
+                            <th class="text-center fit px-3" scope="row">{{ $i++ }}</th>
                             <td>{{ $item->name }}</td>
                             <td class="text-capitalize">{{ $item->role }}</td>
                             <td>{{ $item->created_at->diffForHumans() }}</td>
-                            <td class="fit-content">
-                                <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                            <td class="fit">
+                                <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModals" onClick="getAccountDetail({{ $item->id }})"><i
+                                        class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"
+                                    onClick="deleteAccount({{ $item->id }})"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -184,39 +157,93 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabels" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Edit account</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabels">Edit account</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div id="imported-pages"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <div id="imported-pages"></div>
+
             </div>
         </div>
     </div>
 
 
     <script src="{{ asset('jquery/jquery-3.6.3.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#account_search').on('keyup', function() {
-                // console.log($(this).val());
-
                 $.ajax({
                     type: "GET",
-                    url: "",
+                    url: "{{ url('account-pages') }}",
                     data: {
-                        nama: $(this).val()
+                        result: $(this).val(),
+                        search: true
                     },
+                    dataType: "JSON",
                     success: function(data) {
-                        console.log('Work!');
+                        let i = 1;
+                        let result = data.map(function(e) {
+                            let timestamp = moment(e.created_at).fromNow();
+                            return `
+                                    <tr>
+                                        <th class="text-center fit px-3" scope="row">${i++}</th>
+                                        <td>${e['name']}</td>
+                                        <td class="text-capitalize">${e['role']}</td>
+                                        <td>${timestamp}</td>
+                                        <td class="fit">
+                                            <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModals" onClick="getAccountDetail(${e['id']})"><i
+                                                    class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-danger"
+                                                onClick="deleteAccount(${e['id']})"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                            `;
+                        });
+
+                        $('#target_container').html(result);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#role_filter').change(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('account-pages') }}",
+                    data: {
+                        result: $(this).val(),
+                        status: true
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        let i = 1;
+                        let result = data.map(function(e) {
+                            let timestamp = moment(e.created_at).fromNow();
+                            return `
+                                    <tr>
+                                        <th class="text-center fit px-3" scope="row">${i++}</th>
+                                        <td>${e['name']}</td>
+                                        <td class="text-capitalize">${e['role']}</td>
+                                        <td>${timestamp}</td>
+                                        <td class="fit">
+                                            <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModals" onClick="getAccountDetail(${e['id']})"><i
+                                                    class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-danger"
+                                                onClick="deleteAccount(${e['id']})"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                            `;
+                        });
+
+                        $('#target_container').html(result);
                     },
                     error: function(err) {
                         console.log(err);
@@ -227,13 +254,13 @@
 
         function getAccountDetail(id) {
             $.get("{{ url('/account-detail') }}/" + id, {}, function(data, status) {
-                // $("#imported-pages").html(data);
-                $("#exampleModal").show();
+                $("#imported-pages").html(data);
+                $("#exampleModals").show();
             });
         }
 
         function deleteAccount(id) {
-            if (confirm('Are you sure you want to delete this account?') == true) {
+            if (confirm('Are you sure? you want to delete this account?') == true) {
                 location.href = "{{ url('delete-account') }}" + '/' + id;
             }
         }

@@ -14,7 +14,7 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">PDF</a></li>
+                            <li><a class="dropdown-item" href="{{ url('export-pdf-stat') }}">PDF</a></li>
                             <li><a class="dropdown-item" href="#">XLS</a></li>
                             <li><a class="dropdown-item" href="#">DOCS</a></li>
                         </ul>
@@ -47,6 +47,36 @@
                     optio
                     perspiciatis id placeat cumque consectetur ab porro quidem sunt ullam aspernatur vel deserunt veritatis.
                 </p>
+            </div>
+            <div class="row mx-3">
+                @php
+                    $i = 1;
+                @endphp
+                <h3 mb-2 mt-4>Data table</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Item name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <tr>
+                                <th scope="row">{{ $i++ }}</th>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->category }}</td>
+                                <td>{{ $item->start_price }}</td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->status }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

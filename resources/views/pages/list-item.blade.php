@@ -63,10 +63,10 @@
                     <h4 class="px-0 mb-2" id="category_title">Category</h4>
                     <div class="p-3 px-0 pt-0">
                         <div class="row mb-3">
-                            <div class="col-3">
+                            <div class="col">
                                 <select name="category_filter" id="category_filter"
                                     class="form-control remove-focus cursor text-dark">
-                                    <option class="text-dark dropdown-item" value="All">All</option>
+                                    <option class="text-dark dropdown-item" value="">All</option>
                                     <option class="text-dark dropdown-item" value="Art">Art</option>
                                     <option class="text-dark dropdown-item" value="Building">Building</option>
                                     <option class="text-dark dropdown-item" value="Automotive">Automotive</option>
@@ -86,6 +86,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    @if(Auth::user()->role != 'user')
+                    <h4 class="px-0 mb-2" id="category_title">Status</h4>
+                    <div class="p-3 px-0 pt-0">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <select name="status_filter" id="status_filter"
+                                    class="form-control remove-focus cursor text-dark">
+                                    <option class="text-dark dropdown-item" disabled selected>-- Status --</option>
+                                    <option class="text-dark dropdown-item" value="Open">Open</option>
+                                    <option class="text-dark dropdown-item" value="Closed">Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
             <div class="col">
                 <div id="result-container" class="row">
@@ -95,7 +112,7 @@
                                 data-bs-target="#exampleModal" onClick="getPostinganDetails({{ $list->id }})">
                                 <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="{{ $list->gambar }}"
                                     alt="">
-                                <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 13) }}</h5>
+                                <h5 class=" fw-semibold mb-1 text-truncate">{{ $list->title }}</h5>
                                 <h6 class=" mb-4">{{ $list->subtitle }}</h6>
                                 <h6 class=" mb-3">{{ $list->endauc }}</h6>
                                 <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
@@ -211,14 +228,13 @@
         $('#category_filter').change(function() {
             $.ajax({
                 type: 'get',
-                url: '{{ url('/list-item') }}',
+                url: "{{ url('/list-item') }}",
                 data: {
                     result: $(this).val(),
                     status: true
                 },
                 dataType: "json",
                 success: function(data) {
-
                     var col = data.map(function(e) {
                         return `
                 <div class="col-md-2 rounded p-1 mx-0">
@@ -244,5 +260,97 @@
                 }
             });
         });
+
+        $('#status_filter').change(function() {
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/list-item') }}",
+                data: {
+                    results: $(this).val(),
+                    statuss: true
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    var col = data.map(function(e) {
+                        return `
+                <div class="col-md-2 rounded p-1 mx-0">
+                                <div class="rounded p-4 shadow cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    onClick="getPostinganDetails(${e['id']})">
+                                    <img style="width: 19vw; height: 23vh;" class="mb-4 rounded" src="${e['gambar']}"
+                                        alt="">
+                                    <h5 class=" fw-semibold mb-1 text-truncate">${e['title']}</h5>
+                                    <h6 class=" mb-4">${e['subtitle']}</h6>
+                                    <h6 class=" mb-3">${e['endauc']}</h6>
+                                    <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
+                                    <h6 class=" fw-semibold m-0">Rp. ${e["start_price"]}</h6>
+                                    <hr class=" my-3 mb-2">
+                                    <h6 class=" my-0"></h6>
+                                </div>
+                            </div>
+                `;
+                    });
+                    $('#result-container').html(col);
+                },
+                error: function(err) {
+                    console.log(err)
+                    console.log('err')
+                }
+            });
+        });
+
+        function setStatus() {
+            let status = $('#status').val();
+
+            if (status == 'Open') {
+                $('#status_postingan').html(
+                    `Status : <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary active" id="open_button" onClick="openButton()">Open</button>
+                    <button type="button" class="btn btn-primary" id="close_button" onClick="closeButton()">Close</button>
+                </div>`
+                );
+            } else if (status == 'Closed') {
+                $('#status_postingan').html(
+                    `Status : <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-primary" id="open_button" onClick="openButton()">Open</button>
+                    <button type="button" class="btn btn-primary active" id="close_button" onClick="closeButton()">Close</button>
+                </div>`
+                );
+            }
+        }
+
+        // Open & Close auction
+        function closeButton() {
+            let target_id = $('#id').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('set-auction') }}/" + target_id,
+                data: {
+                    status: 'Closed'
+                },
+                success: function(data) {
+                    console.log('Closed!');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function openButton() {
+            let target_id = $('#id').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('set-auction') }}/" + target_id,
+                data: {
+                    status: 'Open'
+                },
+                success: function(data) {
+                    console.log('Open!');
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
     </script>
 @endsection

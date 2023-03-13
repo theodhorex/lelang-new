@@ -166,9 +166,9 @@
                             <a href="/stat"
                                 class="remove-hover text-decoration-none @if ($route_name == 'stat') text-dark @else non-active-color @endif">
                                 @if ($route_name == 'stat')
-                                    Stat
+                                    Data stat
                                 @else
-                                    Stat
+                                    Data stat
                                 @endif
                             </a>
                         </li>
@@ -273,24 +273,50 @@
                                 </ul>
                             </div>
                             <div class="col-6 px-4 pt-2">
-                                <h3>Page</h3>
-                                <ul class="list-group list-group-flush border-none">
-                                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E; cursor: pointer;">
-                                        <a class="text-decoration-none text-secondary" href="{{ url('/home') }}">Home</a></li>
-                                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E; cursor: pointer;">
-                                        <a class="text-decoration-none text-secondary" href="{{ url('/account-pages') }}">Account</a></li>
-                                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E; cursor: pointer;">
-                                        <a class="text-decoration-none text-secondary" href="{{ url('/form') }}">Form</a></li>
-                                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E; cursor: pointer;">
-                                        <a href="{{ url('/list-item') }}" class="text-decoration-none text-secondary">List Item</a></li>
-                                    <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
-                                        style="color: #7E7E7E; cursor: pointer;">
-                                        <a href="{{ url('/stat') }}" class="text-decoration-none text-secondary">Stat</a></li>
-                                </ul>
+                                @if (Auth::user()->role == 'user')
+                                    <h3>Page</h3>
+                                    <ul class="list-group list-group-flush border-none">
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a class="text-decoration-none text-secondary"
+                                                href="{{ url('/home') }}">Home</a>
+                                        </li>
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a href="{{ url('/list-item') }}"
+                                                class="text-decoration-none text-secondary">List Item</a>
+                                        </li>
+                                    </ul>
+                                @else
+                                    <h3>Page</h3>
+                                    <ul class="list-group list-group-flush border-none">
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a class="text-decoration-none text-secondary"
+                                                href="{{ url('/home') }}">Home</a>
+                                        </li>
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a class="text-decoration-none text-secondary"
+                                                href="{{ url('/account-pages') }}">Account</a>
+                                        </li>
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a class="text-decoration-none text-secondary"
+                                                href="{{ url('/form') }}">Form</a>
+                                        </li>
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a href="{{ url('/list-item') }}"
+                                                class="text-decoration-none text-secondary">List Item</a>
+                                        </li>
+                                        <li class="list-group-item bg-transparent border-none border-bottom-0 px-0"
+                                            style="color: #7E7E7E; cursor: pointer;">
+                                            <a href="{{ url('/stat') }}"
+                                                class="text-decoration-none text-secondary">Stat</a>
+                                        </li>
+                                    </ul>
+                                @endif
                             </div>
                         </div>
                     </div>

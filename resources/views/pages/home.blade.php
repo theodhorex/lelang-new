@@ -109,37 +109,40 @@
                     </div>
                 </div>
                 <div class="row mb-5">
-                    <div class="col-md">
-                        <div class="card border-0 shadow">
-                            <div class="card-body">
-                                <div class="row m-1">
-                                    <div class="col">
-                                        <h3 class="card-text fw-semibold mb-4">Latest activity</h3>
-                                        @foreach ($postingan as $post)
-                                            <div class="massages mb-3">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <h5 class="fw-semibold">{{ Str::limit($post->title, 12) }} -
-                                                            {{ str_replace(['[', ']', '"'], '', $account->where('id', $post->user_id)->pluck('name')) }}
-                                                        </h5>
+                    @if ($postingan->count() > 0)
+                        <div class="col-md">
+                            <div class="card border-0 shadow">
+                                <div class="card-body">
+                                    <div class="row m-1">
+                                        <div class="col">
+                                            <h3 class="card-text fw-semibold mb-4">Latest activity</h3>
+                                            @foreach ($postingan as $post)
+                                                <div class="massages mb-3">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h5 class="fw-semibold">{{ Str::limit($post->title, 12) }} -
+                                                                {{ str_replace(['[', ']', '"'], '', $account->where('id', $post->user_id)->pluck('name')) }}
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class="m-0 float-end">
+                                                                {{ $post->created_at->diffForHumans() }}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <p class="m-0 float-end">{{ $post->created_at->diffForHumans() }}
-                                                        </p>
-                                                    </div>
+                                                    <p>
+                                                        {{ Str::limit($post->descandcond, 70) }}
+                                                    </p>
                                                 </div>
-                                                <p>
-                                                    {{ Str::limit($post->descandcond, 70) }}
-                                                </p>
-                                            </div>
-                                            <hr class="border-secondary">
-                                        @endforeach
+                                                <hr class="border-secondary">
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md">
+                    @endif
+                    {{-- <div class="col-md">
                         <div class="card border-0 shadow">
                             <div class="card-body">
                                 <div class="row m-1">
@@ -150,7 +153,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             @endif
 
@@ -207,37 +210,39 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col">
-                    <div class="row d-block">
-                        <div class="row mx-2 mb-2">
-                            <div class="col d-inline-flex">
-                                <h3>Latest item</h3>
-                                <a class="my-auto mx-3 text-decoration-none fw-semibold "
-                                    href="{{ url('/list-item') }}">See
-                                    all</a>
+                @if ($list_item->count() > 0)
+                    <div class="col">
+                        <div class="row d-block">
+                            <div class="row mx-2 mb-2">
+                                <div class="col d-inline-flex">
+                                    <h3>Latest item</h3>
+                                    <a class="my-auto mx-3 text-decoration-none fw-semibold "
+                                        href="{{ url('/list-item') }}">See
+                                        all</a>
+                                </div>
+                            </div>
+                            <div id="result-container" class="row mx-auto">
+                                @foreach ($list_item as $list)
+                                    <div class="col-md-2 rounded p-1 mx-0">
+                                        <div class="rounded p-4 shadow" style="cursor: pointer;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"
+                                            onClick="getPostinganDetails({{ $list->id }})">
+                                            <img style="width: 30vh; height: 10vw;" class="mb-4 rounded"
+                                                src="{{ $list->gambar }}" alt="">
+                                            <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 15) }}</h5>
+                                            <h6 class=" mb-4">{{ $list->subtitle }}</h6>
+                                            <h6 class=" mb-3">{{ $list->endauc }}</h6>
+                                            <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
+                                            <h6 class=" fw-semibold m-0">Rp. {{ $list->start_price }}</h6>
+                                            <hr class=" my-3 mb-2">
+                                            <h6 class=" my-0">{{ $list->created_at->diffForHumans() }}</h6>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                        <div id="result-container" class="row mx-auto">
-                            @foreach ($list_item as $list)
-                                <div class="col-md-2 rounded p-1 mx-0">
-                                    <div class="rounded p-4 shadow" style="cursor: pointer;" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"
-                                        onClick="getPostinganDetails({{ $list->id }})">
-                                        <img style="width: 30vh; height: 10vw;" class="mb-4 rounded"
-                                            src="{{ $list->gambar }}" alt="">
-                                        <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 15) }}</h5>
-                                        <h6 class=" mb-4">{{ $list->subtitle }}</h6>
-                                        <h6 class=" mb-3">{{ $list->endauc }}</h6>
-                                        <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
-                                        <h6 class=" fw-semibold m-0">Rp. {{ $list->start_price }}</h6>
-                                        <hr class=" my-3 mb-2">
-                                        <h6 class=" my-0">{{ $list->created_at->diffForHumans() }}</h6>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
 

@@ -45,13 +45,12 @@ Route::middleware("role:admin|officer")->group(function(){
     Route::get('/account-pages', [MainController::class, 'accountListPages'])->name('account');
     Route::post('/add-account', [MainController::class, 'addAccount'])->name('add-account');
     Route::get('/account-detail/{id}', [MainController::class, 'getAccountDetailEdit'])->name('account-edit');
+    Route::post('/account-update/{id}', [MainController::class, 'updateAccount'])->name('account-update');
     Route::get('/delete-account/{id}', [MainController::class, 'deleteAccount'])->name('delete-account');
-    Route::get('/search-account', [MainController::class, 'searchAccount'])->name('search-account');
     Route::post('/send-message/{id}', [MainController::class, 'sendMessage'])->name('send-message');
-    Route::get('/stat', function(){
-        return view('pages/stat');
-    })->name('stat');
+    Route::get('/stat', [MainController::class, 'statistic'])->name('stat');
     Route::get('/set-auction/{id}', [MainController::class, 'setAuctionStatus'])->name('set-auction');
+    Route::get('/export-pdf-stat', [MainController::class, 'exportPdf'])->name('export-pdf');
 });
 
 
@@ -61,6 +60,9 @@ Route::get('/postingan-details/{id}', [MainController::class, 'postinganDetails'
 Route::get('/inbox', [MainController::class, 'inbox'])->name('inbox');
 Route::get('/inbox-details/{id}', [MainController::class, 'getInboxDetails'])->name('get-inbox-details');
 Route::post('/inbox-send/{id}/{inbox_id}', [MainController::class, 'inboxReply'])->name('inbox-send');
+Route::get('/inbox-delete/{id}', [MainController::class, 'deleteInbox'])->name('inbox-delete');
+Route::post('/inbox-multiple-delete', [MainController::class, 'inboxMultipleDelete'])->name('inbox-multiple-delete');
+Route::get('/inbox-set-read/{id}', [MainController::class, 'readUnread'])->name('inbox-read-unread');
 Route::get('/search', [MainController::class, 'search'])->name('search');
 Route::post('/bid-send/{id}', [BidController::class, 'sendBid'])->name('send-bid');
 Route::get('/get-bid-data-details/{id}', [BidController::class, 'getBidDataDetails'])->name('get-bid-data-details');
