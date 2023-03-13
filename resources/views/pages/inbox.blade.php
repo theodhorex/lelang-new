@@ -38,17 +38,19 @@
     <form action="{{ url('inbox-multiple-delete') }}" method="POST" id="form-delete">
         @csrf
         @if (Auth::user()->role != 'user')
-            <div class="row mb-3">
-                <div class="col">
-                    <div class="d-flex">
-                        <h5 for="" class="form-label fw-semibold me-3">Check All <input type="checkbox"
-                                name="" id="checkbox_inbox" class="ms-2 my-auto form-check-input"></h5>
-                        <h5 for="" class="form-label fw-semibold d-none" id="trash_button"><button type="submit"><i
-                                    class="fa fa-trash"></button></i>
-                        </h5>
+            @if ($get_message->count() > 0)
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="d-flex">
+                            <h5 for="" class="form-label fw-semibold me-3">Check All <input type="checkbox"
+                                    name="" id="checkbox_inbox" class="ms-2 my-auto form-check-input"></h5>
+                            <h5 for="" class="form-label fw-semibold d-none" id="trash_button"><button
+                                    type="submit"><i class="fa fa-trash"></button></i>
+                            </h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @endif
 
         <div class="row mb-5">
@@ -188,7 +190,7 @@
             }
         });
 
-        $('#status_filter').change(function(){
+        $('#status_filter').change(function() {
             console.log('lol')
         });
     </script>
