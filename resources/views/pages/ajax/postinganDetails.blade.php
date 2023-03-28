@@ -77,8 +77,13 @@
             </div>
         </div>
         <h2 id="start_price" class="fw-bold mb-1">Rp. {{ $postingans->start_price }}</h2>
+        @php
+            $lel = explode('-', $postingans->endauc);
+            $lels = $lel[1] . '/' . $lel[2] . '/' . $lel[0];
+            $endauc = App\Http\Controllers\MainController::dateConvert($lels);
+        @endphp
         <h5 id="endauc" class="mb-2">
-            Closing date : <b>{{ $postingans->endauc }}</b>
+            Closing date : <b>{{ $endauc }}</b>
         </h5>
 
         <h5 class="mb-4" id="status_postingan">Status : <b
@@ -155,13 +160,14 @@
         @endif
         @if ($postingans->status == 'Open')
             @if (Auth::user()->role == 'user')
-                <form action="{{ url('/bid-send', $postingans->id) }}" method="post" class="mb-2">
+                <form action="{{ url('/bid-send', $postingans->id) }}" method="post" class="mb-2" id="bid_form">
                     @csrf
                     <h4 class="mb-2 @if (Auth::user()->role == 'admin') d-none @endif">Your bid</h4>
                     <input type="number" name="bidd" id="bidd"
                         class="form-control cursor mb-3 @if (Auth::user()->role == 'admin') d-none @endif" required>
-                    <button type="submit"
-                        class="btn btn-primary fw-semibold @if (Auth::user()->role == 'admin') d-none @endif">Bid</button>
+                    <button type="button"
+                        class="btn btn-primary fw-semibold @if (Auth::user()->role == 'admin') d-none @endif"
+                        onClick="validateBid()">Bid</button>
                 </form>
             @endif
             <span style="color: #7E7E7E;" class="@if (Auth::user()->role != 'user') d-none @endif">*Winners will be
@@ -305,7 +311,7 @@
                             <a href="{{ url('/stat') }}" class="text-decoration-none text-secondary">Stat</a>
                         </li>
                     </ul>
-                @endif  
+                @endif
             </div>
         </div>
     </div>
@@ -338,5 +344,22 @@
     function setWinner(id, name) {
         $('#winner_name').val(name);
         $('#winner_id').val(id);
+    }
+
+    // $(document).ready(function(){
+
+    // });
+
+    function validateBid() {
+        let i = "{{ $postingans->start_price }}";
+        let o = i.replace(',', '')
+
+        let bid_value = $('#bidd').val()
+        if (bid_value <= o) {
+            alert('The price that you add cannot be less than the price that has been determined');
+            $('#bidd').val("");
+        } else {
+            document.getElementById('bid_form').submit();
+        }
     }
 </script>

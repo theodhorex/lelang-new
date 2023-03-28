@@ -223,6 +223,11 @@
                             </div>
                             <div id="result-container" class="row mx-auto">
                                 @foreach ($list_item as $list)
+                                    @php
+                                        $lel = explode('-', $list->endauc);
+                                        $lels = $lel[1] . '/' . $lel[2] . '/' . $lel[0];
+                                        $endauc = App\Http\Controllers\MainController::dateConvert($lels);
+                                    @endphp
                                     <div class="col-md-2 rounded p-1 mx-0">
                                         <div class="rounded p-4 shadow" style="cursor: pointer;" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal"
@@ -231,7 +236,7 @@
                                                 src="{{ $list->gambar }}" alt="">
                                             <h5 class=" fw-semibold mb-1">{{ Str::limit($list->title, 15) }}</h5>
                                             <h6 class=" mb-4">{{ $list->subtitle }}</h6>
-                                            <h6 class=" mb-3">{{ $list->endauc }}</h6>
+                                            <h6 class=" mb-3">{{ $endauc }}</h6>
                                             <h6 class=" fw-semibold m-0 mb-1">Current offer</h6>
                                             <h6 class=" fw-semibold m-0">Rp. {{ $list->start_price }}</h6>
                                             <hr class=" my-3 mb-2">

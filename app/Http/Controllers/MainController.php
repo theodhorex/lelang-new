@@ -23,7 +23,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class MainController extends Controller
 {
     // CRUD Function
-
     public function formPages()
     {
         return view('pages/form');
@@ -43,10 +42,7 @@ class MainController extends Controller
             $postingan->location = $request->location;
             $postingan->descandcond = $request->descandcond;
             $postingan->category = $request->category;
-
-            $lel = explode('-', $request->endauc);
-            $endauc = $lel[1] . '/' . $lel[2] . '/' . $lel[0];
-            $postingan->endauc = $this->dateConvert($endauc);
+            $postingan->endauc = $request->endauc;
             $postingan->start_price = $this->moneyFormat($request->startprice);
 
             if ($request->hasFile('uploadFile')) {

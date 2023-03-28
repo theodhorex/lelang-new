@@ -23,7 +23,7 @@
             </div>
             <hr class="border-light">
             <div class="wrapper d-block mx-4">
-                <canvas id="lineChart" class="mx-auto"></canvas>
+                {{-- <canvas id="lineChart" class="mx-auto"></canvas> --}}
             </div>
             <hr class="border-dark mx-3">
             <div class="wrapper mx-3">

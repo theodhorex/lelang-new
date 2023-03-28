@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BidData;
+use App\Models\Postingan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,20 @@ class BidController extends Controller
 {
     public function sendBid(Request $request, $id){
         $bid_data = new BidData;
+        $postingan = Postingan::find($id);
 
-        $bid_data -> bid = $this -> moneyFormat($request->bidd);
-        $bid_data -> user_id = Auth::user() -> id;
-        $bid_data -> postingan_id = $id;
+        $i = str_replace(',', '', $postingan->start_price);
+        
+        if($request->bidd < $i){
+            echo 'LOL';
+        }else{
+            $bid_data->bid = $this->moneyFormat($request->bidd);
+            $bid_data->user_id = Auth::user()->id;
+            $bid_data->postingan_id = $id;
 
-        $bid_data -> save();
+            $bid_data->save();
+        }
+        
         return redirect('/home');
     }
 
